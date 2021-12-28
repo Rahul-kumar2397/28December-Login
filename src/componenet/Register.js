@@ -23,61 +23,73 @@ function Register() {
         }
     }, [])
     async function otpsnd() {
-        console.log(email); 
+        console.log(email);
         let item = { email };
 
 
 
+        let pattern = /^[_a-z0-9-]+(.[a-z0-9-]+)@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/;
+        if (pattern.test(email)) {
+        
+          document.getElementById('showmsg').innerHTML = ""
+        
+        }
+        else if (email=="")
+        {
+            document.getElementById('showmsg').innerHTML="Email is required"
+        }
 
-        //     const baseurl=[];
-        //   let url="/componenet/setpassword";
-        // axios.get("").then(res => {
-        //     console.log(res);
-        //     for(const dataobj res.data.data){
-        //         url.push (parseInt(dataobj.baseurl))
-        //     }
-        // })   
+        else if (email.length > 15) {
+            document.getElementById('showmsg').innerHTML = "Email id is to long";
+        }
+        else if (email != pattern) {
+            document.getElementById('showmsg').innerHTML = "Enter Valid Email ID"
+        }
+        else{
+            alert()
+        }
+    //     if (pattern.test(email)) {
+        
+    //         document.getElementById('showmsg').innerHTML = ""
+        
+          
+    //         let result = await fetch(`${baseUrl}`, {
 
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Accept': 'application/json'
 
+    //             },
 
-
-        let result = await fetch(`${baseUrl}`, {
-
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-
-            },
-
-            body: JSON.stringify(item)
-
-
-        }).catch(rejected => {
-            console.log(rejected);
-            window.location.href = "/ServerError";
-        });
-
-        result.json().then(data => {
-
-
-            if (data.status === "success") {
-                alert(data.message)
-                alert("Please check you email")
-            } else if (data.status === "error") {
-                alert(data.message);
-            }
-        })
+    //             body: JSON.stringify(item)
 
 
+    //         }).catch(rejected => {
+    //             console.log(rejected);
+    //             window.location.href = "/ServerError";
+    //         });
 
-        console.log(Response);
-        localStorage.setItem("user-info", JSON.stringify(result))
-        console.log(result);
+    //         result.json().then(data => {
+
+
+    //             if (data.status === "success") {
+    //                 alert(data.message)
+    //                 alert("Please check you email")
+    //             } else if (data.status === "error") {
+    //                 alert(data.message);
+    //             }
+    //         })
+             
+
+
+    //         console.log(Response);
+    //         localStorage.setItem("user-info", JSON.stringify(result))
+    //         console.log(result);
 
 
 
-
+    //   }
 
 
     }
@@ -85,8 +97,9 @@ function Register() {
         <>
 
 
-           
-                <h1>Registration</h1>
+
+
+            {/* <h1>Registration</h1>
                 <div className="logincss"> <label>Email Id</label>
 
                     <input type="text" class="form-control-label" name="email" placeholder="Enter Email Id" onChange={(e) => setEmail(e.target.value)} className="form-control" />
@@ -95,13 +108,31 @@ function Register() {
                     <button className="form-input-btn btn btn-primary" type="submit" onClick={otpsnd}>Submit</button>
 
                     <Link id="thisid" to="/">go to login</Link>
+                </div> */}
+
+
+
+
+            <body>
+                <div class="main">
+                    <p class="sign" align="center">Register</p>
+                    <form class="form1" />
+                    <input type="text" name="email" placeholder="Enter Email Id" onChange={(e) => setEmail(e.target.value)} className="pass" />
+                    <div id="showmsg" className="msg" ></div>
+                    <br />
+
+                    <button class="submit" align="center" onClick={otpsnd} >Register</button>
+
+                    <p class="forgot" align="center"><Link to="/"> Already Register? Visit  </Link></p>
+
+
                 </div>
 
-        
+            </body>
 
 
 
-</>
+        </>
     )
 }
 

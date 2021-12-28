@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import validate from './LoginValidate';
 import { Link, useHistory } from 'react-router-dom';
 import './newColor.css';
 
@@ -12,58 +13,76 @@ function Login() {
 
     const history = useHistory();
 
+
+
+
     async function login() {
         console.log(email, password);
         let item = { email, password };
-        if (email === "") {
-            alert("Please Enter Email Id.")
+
+
+
+        let pattern = /^[_a-z0-9-]+(.[a-z0-9-]+)@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/;
+
+        if (pattern.test(email)) {
+
+            document.getElementById('showmsg').innerHTML = ""
+        } 
+         else   if (email == "") {
+            document.getElementById('showmsg').innerHTML = "Email is required"
         }
-        else if (password === "") {
-            alert("Please Enter Password.");
-
-
-
+        else if (email != pattern) {
+            document.getElementById('showmsg').innerHTML = "Enter valid email"
         }
-        else {
-            let result = await fetch('http://192.168.1.116:3000/users/login', {
+         if (password == "") {
+         
 
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+            document.getElementById('showError').innerHTML = "password is Required"
+        }   else if (password) {
+            document.getElementById('showError').innerHTML = ""
+        }
 
-                },
+       else {
+           alert("api call")
+            // let result = await fetch('http://192.168.1.116:3000/users/login', {
 
-                body: JSON.stringify(item)
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Accept': 'application/json'
 
-            }) .catch(rejected => {
-                console.log(rejected);
-                  window.location.href = "/ServerError";
-                        
-            });
+            //     },
 
-            result.json().then(data => {
+            //     body: JSON.stringify(item)
 
-                console.log(data)
-                if (data.status === "success") {
-                    alert(data.message);
-                    console.log(data);
-                    history.push("/Enter your new page here.")
-                } else if (data.status === "error") {
-                    alert(data.message);
-                 
-                } else{
+            // }).catch(rejected => {
+            //     console.log(rejected);
+            //     window.location.href = "/ServerError";
 
-              return console.log(data);
-                    
-                }
+            // });
 
-            })
-           
+            // result.json().then(data => {
 
-            console.log(Response);
-            localStorage.setItem("user-info", JSON.stringify(result))
-            console.log(result);
+            //     console.log(data)
+            //     if (data.status === "success") {
+            //         alert(data.message);
+            //         console.log(data);
+            //         history.push("/Enter your new page here.")
+            //     } else if (data.status === "error") {
+            //         alert(data.message);
+
+            //     } else {
+
+            //         return console.log(data);
+
+            //     }
+
+            // })
+
+
+            // console.log(Response);
+            // localStorage.setItem("user-info", JSON.stringify(result))
+            // console.log(result);
 
 
 
@@ -71,10 +90,10 @@ function Login() {
         }
     }
     return (
-    
-    <>
-    
-        <div className="logincss"> 
+
+        <div>
+
+            {/* <div className="logincss"> 
         <h2>Aryapayroll</h2>
         <label>Email Id</label>
 
@@ -87,14 +106,39 @@ function Login() {
 
 <span className="form-input-login">Not Registered? Visit <a href="/setpassword">here</a></span><br />
 <span className="form-input-login">Forget Password <a href="/register">here</a></span>
-</div>
-
-        
+</div> */}
 
 
-</>
 
-    
+            <body>
+
+                <form  >
+                    <div class="main">
+                        <h1 class="sign" align="center">Login Page</h1>
+                        <form class="form1" />
+                        <input type="email" name="email" id="email" placeholder="Enter Email Id" onChange={(e) => setEmail(e.target.value)} className="pass" />
+                        <div id="showmsg" className="msg" />
+                        <br />
+                        <input type="password" name="password" id="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} className="pass" />
+                        <div id="showError" className="msg" />
+                        <br />
+
+
+                        <span id="showmsg"></span>
+                        <a class="submit" align="center" id="submit" onClick={login}>Login</a>
+
+                        <p class="forgot" align="center"><Link to="/register"> Not Register? Visit</Link></p>
+
+
+                    </div>
+                </form>
+            </body>
+
+
+
+
+        </div>
+
     )
 }
 

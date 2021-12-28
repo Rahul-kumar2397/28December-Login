@@ -79,7 +79,7 @@ function Setpass() {
         <>
 
 
-
+{/* 
         
            <div>
                 <label className="form-control-label">password</label>
@@ -96,8 +96,28 @@ function Setpass() {
                 <br />
                 <Link id="thisid " to="/register">Note register? Visit</Link>
             </div>
+ */}
 
 
+
+
+
+            <body>
+                <div class="main">
+                    <p class="sign" align="center">Aryavrat Payroll</p>
+                    <form class="form1" />
+                    <input type="password" name="password" placeholder="Enter password" onChange={(e) => setPassword(e.target.value)} className="pass" />
+                    <br />
+                    <input type="password" name="cpassword"  placeholder="Enter cpassword"onChange={(e) => setpasswordConfirmation(e.target.value)} className="pass" />
+                    <br />
+                    <a class="submit" align="center"  onClick={login}>set pass</a>
+                   
+                    <p class="forgot" align="center"><Link to="/">Go to login </Link></p>
+
+
+                </div>
+
+            </body>
 
 
 
